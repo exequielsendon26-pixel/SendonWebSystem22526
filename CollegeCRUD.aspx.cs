@@ -14,23 +14,53 @@ namespace SendonWebSystem22526
             lblMessage.Visible = false;
         }
 
+        #region "Insert"
         protected void lbtnAddNewRecord_Click(object sender, EventArgs e)
         {
-            pnlAddNewRecord.Visible = true;
-            GridView1.Visible = false;
-            lbtnAddNewRecord.Visible = false;
+            pageAddEdit();
             btnUpdate.Visible = false;
             btnSave.Visible = true;
 
         }
-
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            pnlAddNewRecord.Visible = false;
-            GridView1.Visible = true;
-            lbtnAddNewRecord.Visible = true;
             SqlDataSource1.Insert();    
         }
+
+        protected void SqlDataSource1_Inserted(object sender, SqlDataSourceStatusEventArgs e)
+        {
+            pageInitialize();
+            myMessage("New Record Added!");
+        }
+
+        #endregion
+
+        #region "UPDATE"
+        protected void btnEdit_Click(object sender, EventArgs e)
+            {
+            pageAddEdit();
+                btnUpdate.Visible = true;
+                btnSave.Visible = false;
+            }
+        protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
+            {
+                GridViewRow row = GridView1.SelectedRow;
+                txtDescription.Text = row.Cells[3].Text;
+                txtCode.Text = row.Cells[2].Text;
+            }
+
+        protected void btnUpdate_Click(object sender, EventArgs e)
+            {
+                SqlDataSource1.Update();
+            }
+
+        protected void SqlDataSource1_Updated(object sender, SqlDataSourceStatusEventArgs e)
+            {
+                pageInitialize();
+                myMessage("Record Updated!");
+            }
+
+        #endregion
 
         protected void GridView1_RowDeleted(object sender, GridViewDeletedEventArgs e)
         {
@@ -38,46 +68,46 @@ namespace SendonWebSystem22526
             lblMessage.Text = "Record Deleted!";
         }
 
-        protected void SqlDataSource1_Inserted(object sender, SqlDataSourceStatusEventArgs e)
+        
+
+        
+
+        
+
+       
+
+        protected void btnCancel_Click(object sender, EventArgs e)
         {
-            lblMessage.Visible = true;
-            lblMessage.Text = "New Record Added!";
+            pageInitialize();
+
         }
 
-        protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
+        #region "MyMethods"
+        
+        public void pageInitialize()
         {
-            GridViewRow row = GridView1.SelectedRow;
-            txtDescription.Text = row.Cells[3].Text;
-            txtCode.Text = row.Cells[2].Text;
-
+            txtCode.Text = " ";
+            txtDescription.Text = " ";
+            pnlAddNewRecord.Visible = false;
+            GridView1.Visible = true;
+            lbtnAddNewRecord.Visible =  true;
         }
 
-        protected void btnEdit_Click(object sender, EventArgs e)
+        public void pageAddEdit()
         {
             pnlAddNewRecord.Visible = true;
             GridView1.Visible = false;
             lbtnAddNewRecord.Visible = false;
-            btnUpdate.Visible = true;
-            btnSave.Visible = false;
         }
 
-        protected void btnUpdate_Click(object sender, EventArgs e)
+        public void myMessage(string msg)
         {
-            pnlAddNewRecord.Visible = false;
-            GridView1.Visible = true;
-            lbtnAddNewRecord.Visible = true;
-            SqlDataSource1.Update();
+            lblMessage.Visible = true;
+            lblMessage.Text = msg;
         }
 
-        protected void btnCancel_Click(object sender, EventArgs e)
-        {
-            txtCode.Text = "";
-            txtDescription.Text = "";
+        #endregion
 
-            pnlAddNewRecord.Visible = false;
-            GridView1.Visible = true;
-            lbtnAddNewRecord.Visible = true;
-
-        }
+        
     }
 }

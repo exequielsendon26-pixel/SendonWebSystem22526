@@ -31,7 +31,7 @@
         SelectCommand="SELECT collegeID, Code, Description, Deleted FROM tblCollege WHERE (Deleted = 0)" 
         InsertCommand="INSERT INTO tblCollege(Code, Description, Deleted) VALUES (?, ?, ?)" 
         DeleteCommand="UPDATE tblCollege SET Deleted = ? WHERE (collegeID = ?)" 
-        OnInserted="SqlDataSource1_Inserted" UpdateCommand="UPDATE tblCollege SET Code = ?, Description = ? WHERE (collegeID = ?)" 
+        OnInserted="SqlDataSource1_Inserted" UpdateCommand="UPDATE tblCollege SET Code = ?, Description = ? WHERE (collegeID = ?)" OnUpdated="SqlDataSource1_Updated" 
       >
         <DeleteParameters>
             <asp:Parameter DefaultValue="1" Name="?" />
