@@ -2,13 +2,8 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="collegeID" DataSourceID="SqlDataSource1" class="table table-hover" OnRowDeleted="GridView1_RowDeleted">
+    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="collegeID" DataSourceID="SqlDataSource1" class="table table-hover" OnRowDeleted="GridView1_RowDeleted" OnSelectedIndexChanged="GridView1_SelectedIndexChanged">
         <Columns>
-            <asp:TemplateField HeaderText="No.">
-                <ItemTemplate>
-                   <%#  Container.DataItemIndex + 1 %>
-                </ItemTemplate>
-            </asp:TemplateField>
             <asp:TemplateField HeaderText="No."></asp:TemplateField>
             <asp:BoundField DataField="collegeID" HeaderText="collegeID" InsertVisible="False" ReadOnly="True" SortExpression="collegeID" Visible="False" />
             <asp:BoundField DataField="Code" HeaderText="Code" SortExpression="Code" />
@@ -16,8 +11,13 @@
             <asp:CheckBoxField DataField="Deleted" HeaderText="Deleted" SortExpression="Deleted" Visible="False" />
             <asp:TemplateField HeaderText="Action" ShowHeader="False">
                 <ItemTemplate>
-                    <asp:Button ID="btnEdit" runat="server" CommandArgument="Select" Text="Edit" class="btn btn-info" Height="35px" Width="60px"/>
-                    <asp:Button ID="btnDelete" runat="server" CommandName="Delete" Text="Delete" class="btn btn-outline-danger" Height="35px" Width="70px" />
+                    <asp:Button ID="btnEdit" runat="server" Text="Edit" 
+                        class="btn btn-info" Height="35px" 
+                        Width="60px" OnClick="btnEdit_Click" CommandName="Select"/>
+                    <asp:Button ID="btnDelete" runat="server" 
+                        CommandName="Delete" Text="Delete" 
+                        class="btn btn-outline-danger" 
+                        Height="35px" Width="70px" />
                 </ItemTemplate>
             </asp:TemplateField>
         </Columns>
@@ -29,7 +29,9 @@
         ConnectionString="<%$ ConnectionStrings:ConnectionString %>" 
         ProviderName="<%$ ConnectionStrings:ConnectionString.ProviderName %>" 
         SelectCommand="SELECT collegeID, Code, Description, Deleted FROM tblCollege WHERE (Deleted = 0)" 
-        InsertCommand="INSERT INTO tblCollege(Code, Description, Deleted) VALUES (?, ?, ?)" DeleteCommand="UPDATE tblCollege SET Deleted = ? WHERE (collegeID = ?)" OnInserted="SqlDataSource1_Inserted" 
+        InsertCommand="INSERT INTO tblCollege(Code, Description, Deleted) VALUES (?, ?, ?)" 
+        DeleteCommand="UPDATE tblCollege SET Deleted = ? WHERE (collegeID = ?)" 
+        OnInserted="SqlDataSource1_Inserted" UpdateCommand="UPDATE tblCollege SET Code = ?, Description = ? WHERE (collegeID = ?)" 
       >
         <DeleteParameters>
             <asp:Parameter DefaultValue="1" Name="?" />
@@ -39,6 +41,11 @@
             <asp:ControlParameter ControlID="txtDescription" Name="?" PropertyName="Text" />
             <asp:Parameter DefaultValue="0" Name="?" />
         </InsertParameters>
+        <UpdateParameters>
+            <asp:ControlParameter ControlID="txtCode" Name="?" PropertyName="Text" />
+            <asp:ControlParameter ControlID="txtDescription" Name="?" PropertyName="Text" />
+            <asp:ControlParameter ControlID="GridView1" Name="?" PropertyName="SelectedValue" />
+        </UpdateParameters>
     </asp:SqlDataSource>
 
 
@@ -57,7 +64,9 @@
         <asp:Label ID="Label2" runat="server" Text="Description"></asp:Label>
         <asp:TextBox ID="txtDescription" runat="server" CssClass="form-control"></asp:TextBox>
         <br />
-        <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="form-control" OnClick="btnSave_Click" />
+        <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="btn btn-success" OnClick="btnSave_Click" />
+        <asp:Button ID="btnUpdate" runat="server" Text="Update" class="btn btn-outline-primary" OnClick="btnUpdate_Click" />
+        <asp:Button ID="btnCancel" runat="server" Text="Cancel" class="btn btn-warning" OnClick="btnCancel_Click"/>
     </asp:Panel>
 
 

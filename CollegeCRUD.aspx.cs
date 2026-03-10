@@ -19,6 +19,9 @@ namespace SendonWebSystem22526
             pnlAddNewRecord.Visible = true;
             GridView1.Visible = false;
             lbtnAddNewRecord.Visible = false;
+            btnUpdate.Visible = false;
+            btnSave.Visible = true;
+
         }
 
         protected void btnSave_Click(object sender, EventArgs e)
@@ -39,6 +42,42 @@ namespace SendonWebSystem22526
         {
             lblMessage.Visible = true;
             lblMessage.Text = "New Record Added!";
+        }
+
+        protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            GridViewRow row = GridView1.SelectedRow;
+            txtDescription.Text = row.Cells[3].Text;
+            txtCode.Text = row.Cells[2].Text;
+
+        }
+
+        protected void btnEdit_Click(object sender, EventArgs e)
+        {
+            pnlAddNewRecord.Visible = true;
+            GridView1.Visible = false;
+            lbtnAddNewRecord.Visible = false;
+            btnUpdate.Visible = true;
+            btnSave.Visible = false;
+        }
+
+        protected void btnUpdate_Click(object sender, EventArgs e)
+        {
+            pnlAddNewRecord.Visible = false;
+            GridView1.Visible = true;
+            lbtnAddNewRecord.Visible = true;
+            SqlDataSource1.Update();
+        }
+
+        protected void btnCancel_Click(object sender, EventArgs e)
+        {
+            txtCode.Text = "";
+            txtDescription.Text = "";
+
+            pnlAddNewRecord.Visible = false;
+            GridView1.Visible = true;
+            lbtnAddNewRecord.Visible = true;
+
         }
     }
 }
