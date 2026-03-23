@@ -3030,6 +3030,7 @@ textarea.form-control-lg {
   --bs-btn-disabled-bg: transparent;
   --bs-btn-disabled-border-color: #0d6efd;
   --bs-gradient: none;
+    height: 29px;
 }
 
 .btn-outline-secondary {

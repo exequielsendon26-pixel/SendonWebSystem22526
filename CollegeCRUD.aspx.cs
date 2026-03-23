@@ -70,16 +70,11 @@ namespace SendonWebSystem22526
 
         
 
-        
-
-        
-
        
 
         protected void btnCancel_Click(object sender, EventArgs e)
         {
             pageInitialize();
-
         }
 
         #region "MyMethods"
